@@ -1,6 +1,7 @@
 # Author: Des Kitten
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
 
+
 # Start, requesting input data
 time_txt_input = input("Введите время видео в формате ЧЧ:ММ: ")
 
