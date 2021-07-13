@@ -1,49 +1,60 @@
 # Author: Des Kitten
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
+"""
+    TODO:
+    - Try/Exception
+        - by length
+        - by negative values
+    - Refactor sum_of_minutes
+    - Refactor time_acceleration
+    - Return the Ru in other branch
+"""
 
 
-
-# Checking the missclicks
-
-def replace_missclicks(x: str) -> str:
+def replace_missclicks(*args) -> str:
     """
-    Funsction returns string with replaced separator
-    :type x: string
+    Function returns string with replaced separator
     """
-    tup_of_missclicks = ',', '?', '/', '@', '<', '>', 'б', 'ю', 'Б', \
-                        'Ю', '%', '^', '&', ':', ';', 'ж', 'Ж', '*'
+    tup_of_missclicks = ',', '?', '/', '@', '<', '>', 'б', 'ю', 'Б', 'Ю', '%',\
+                        '^', '&', ':', ';', 'Ж', 'ж', '*', '+', "\\", '"', "'"
+    x, y = args
     for i in tup_of_missclicks:
         if x.find(str(i)):
-            x = x.replace(str(i), '.')
+            x = x.replace(str(i), y)
+            # print(x, "is the x value") # Debug_line
+    return x
+
+
+def clock_separation():
+    """
+    Function finds and separates minutes from hours by separation marker
+    :get: string
+    :return: tuple of two separated integer values
+    """
+    sep_marker = time_txt_input.find(":")
+    num_of_hours = int(time_txt_input[:sep_marker])
+    num_of_minutes = int(time_txt_input[(sep_marker + 1):])
+    # print(sep_marker, "is the sep;", num_of_hours, "are the hours; and the minutes are ", num_of_minutes) # Debug_line
+    return num_of_hours, num_of_minutes
 
 
 # Start, requesting input data
-time_txt_input = input("Введите время видео в формате ЧЧ:ММ: ")
+time_txt_input = input("Input the time value in format HH:MM: ")
+axel_mod = input("Input the speed value in format X.Y or X.YY: ")
 
-axel_mod = input("Введите скорость воспроизведения: ")
-
-""" Previous code before it def as function above
-for i in tup_of_missclicks:
-    if axel_mod.find(str(i)):
-        axel_mod = axel_mod.replace(str(i), '.')
-    elif time_txt_input.find(str(i)):
-        time_txt_input = time_txt_input.replace(str(i), ':')
-"""
-
-replace_missclicks(axel_mod)
-replace_missclicks(time_txt_input)
-print(axel_mod, "time", time_txt_input) ## DEBUG: function
+# Checking the missclicks
+axel_mod = replace_missclicks(axel_mod, '.')
+time_txt_input = replace_missclicks(time_txt_input, ':')
+# print("axel_mod", axel_mod, "and time", time_txt_input) # Debug_line
 
 # Converting the acceleration modifier
 acceleration_mod = float(axel_mod)
-print(acceleration_mod)
+# print(acceleration_mod, "this is the float num") # Debug_line
 
 # Find & count minutes in hours and sums them all
-clock_sep = time_txt_input.find(":")
+num_of_hours = num_of_minutes = 0
 
-num_of_hours = int(time_txt_input[:clock_sep])
-num_of_minutes = int(time_txt_input[(clock_sep + 1):])
-
+clock_separation()
 sum_of_minutes = num_of_hours * 60 + num_of_minutes
 
 # Separation the new sum of minutes onto hours and minutes
@@ -54,6 +65,6 @@ if time_acceleration >= 60:
     m_output: int = int(time_acceleration % 60)
 
 # Разложение на падежи
-print("На скорости", acceleration_mod, "вы просмотрите видео за:", h_output, "час/-ов/-а/", ",", m_output,
-      "минут/-ы/-у")
+print("On the speed of", acceleration_mod, "from base, you'll get only:", h_output, "hour/-s", " and", m_output,
+      "minute/-s")
 quit()
