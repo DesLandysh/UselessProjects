@@ -1,22 +1,27 @@
-# Author: Des Kitten
+#Author: Des Kitten
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
-"""
-    TODO:
-    - Try/Exception
-        - done! by length
-        - done! by negative values
-        - by letters
-    - undone! Refactor sum_of_minutes
-    - undone! Refactor time_acceleration
-    - Return the Ru in other branch
-"""
+
+
+def match(text_to_check, alphabet=None):
+    """
+    Function checks if the inputting value have any letters
+    :param text_to_check: is the time_txt_input
+    :param alphabet: eng/ru
+    :return:
+    """
+    if alphabet is None:
+        alphabet = set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+                       'abcdefghijklmnopqrstuvwyxz'
+                       'АБВГДЕЁЖЗИЙКЛАМНОПРСТУФХЦЧЩЪЫЬЭЮЯ'
+                       'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    return not alphabet.isdisjoint(text_to_check)
 
 
 def replace_missclicks(*args) -> str:
     """
     Function returns string with replaced separator
     """
-    tup_of_missclicks = ',', '?', '/', '@', '<', '>', 'б', 'ю', 'Б', 'Ю', '%',\
+    tup_of_missclicks = ',', '?', '/', '@', '<', '>', 'б', 'ю', 'Б', 'Ю', '%', \
                         '^', '&', ':', ';', 'Ж', 'ж', '*', '+', "\\", '"', "'", "."
     x, y = args
     for i in tup_of_missclicks:
@@ -30,27 +35,29 @@ def replace_missclicks(*args) -> str:
 time_txt_input = input("Input the time value in format HH:MM: ")
 axel_mod = input("Input the speed value in format X.Y or X.YY: ")
 
+# Defence by checking length and negative values
 try:
-    len(time_txt_input) > 10
+    len(time_txt_input) > 6
 except TypeError:
     time_txt_input = "00:01"
 finally:
     time_txt_input = input("Please, type using HH:MM format:")
 
 try:
-    time_txt_input.find([0] == "-")
-except ValueError:
-    print("You enter the negative value of time")
+    match(time_txt_input)
+except TypeError:
+    time_txt_input = "00:01"
 finally:
-    print('If you insist of your value, type "Y", otherwise press "N" to set new value')
-    is_choice = input()
-    if is_choice == "N" or "n":
-        time_txt_input = input("Please, type using HH:MM format:")
-    elif is_choice == "Y" or "y":
-        time_txt_input = time_txt_input[:[1]]
-    else:
-        print("Don't trick me out!")
-        time_txt_input = input("Type with >> HH:MM << this format:")
+    time_txt_input = input("Please, use numbers only for HH:MM format:")
+
+try:
+    time_txt_input.find("-", 0)
+except ValueError:
+    time_txt_input = "00:01"
+finally:
+    print("You enter the negative value of time")
+    print('Please, type positive numbers in HH:MM format:')
+    time_txt_input = input("Please, type using HH:MM format:")
 
 try:
     len(axel_mod) > 4
@@ -60,19 +67,19 @@ finally:
     axel_mod = input("Please, type using X.Y or X.YY format:")
 
 try:
-    axel_mod.find([0] == "-")
+    axel_mod.find("-", 0, 2)
 except ValueError:
-    print("You enter the negative value of time")
+    axel_mod = 1.0
 finally:
-    print('If you insist of your value, type "Y", otherwise press "N" to set new value')
-    is_choice_a = input()
-    if is_choice_a == "N" or "n":
-        axel_mod = input("Please, type using X.YY or Y.X format:")
-    elif is_choice_a == "Y" or "y":
-        axel_mod = axel_mod[:[1]]
-    else:
-        print("Don't trick me out!")
-        axel_mod = input("Type with >> Y.XX << this format:")
+    print("You enter the negative value of time")
+    axel_mod = input("Please, type using positive numbers for X.YY or Y.X format:")
+
+try:
+    match(axel_mod)
+except TypeError:
+    axel_mod = 1.0
+finally:
+    axel_mod = input("Please, use numbers only for X.YY or Y.X format:")
 
 # Checking the missclicks
 axel_mod = replace_missclicks(axel_mod, '.')
@@ -86,7 +93,6 @@ sep_marker = time_txt_input.find(":")
 num_of_hours = int(time_txt_input[:sep_marker])
 num_of_minutes = int(time_txt_input[(sep_marker + 1):])
 sum_of_minutes = num_of_hours * 60 + num_of_minutes
-
 
 # Separation the new sum of minutes onto hours and minutes
 h_output, m_output = 1, 1
