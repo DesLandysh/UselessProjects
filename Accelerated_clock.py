@@ -1,5 +1,14 @@
-#Author: Des Kitten
+# Author: Des Kitten
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
+"""
+    TODO:
+    - Try/Exception
+        - by length
+        - by negative values
+    - Refactor sum_of_minutes
+    - Refactor time_acceleration
+    - Return the Ru in other branch
+"""
 
 
 def match(text_to_check, alphabet=None):
@@ -33,53 +42,57 @@ def replace_missclicks(*args) -> str:
 
 # Start, requesting input data
 time_txt_input = input("Input the time value in format HH:MM: ")
+
+# Defence by checking length, letter fill and negative values
+if len(time_txt_input) > 7:
+    try:
+        len(time_txt_input) > 7
+    except TypeError:
+        print("Length alert")
+    finally:
+        time_txt_input = input("Please, type using HH:MM format (6 symbols max):")
+elif match(time_txt_input):
+    try:
+        match(time_txt_input)
+    except TypeError:
+        print("Letters alert")
+    finally:
+        time_txt_input = input("Please, type using only numbers HH:MM format:")
+elif time_txt_input.find("-", 0):
+    try:
+        time_txt_input.find("-", 0)
+    except ValueError:
+        print("Negative number alert")
+    finally:
+        time_txt_input = input("Please, type using positive numbers for HH:MM format:")
+else:
+    print("time_txt_input")
+
+# Requesting speed value and checking is_valid by length, negative num and letter includings
 axel_mod = input("Input the speed value in format X.Y or X.YY: ")
-
-# Defence by checking length and negative values
-try:
-    len(time_txt_input) > 6
-except TypeError:
-    time_txt_input = "00:01"
-finally:
-    time_txt_input = input("Please, type using HH:MM format:")
-
-try:
-    match(time_txt_input)
-except TypeError:
-    time_txt_input = "00:01"
-finally:
-    time_txt_input = input("Please, use numbers only for HH:MM format:")
-
-try:
-    time_txt_input.find("-", 0)
-except ValueError:
-    time_txt_input = "00:01"
-finally:
-    print("You enter the negative value of time")
-    print('Please, type positive numbers in HH:MM format:')
-    time_txt_input = input("Please, type using HH:MM format:")
-
-try:
-    len(axel_mod) > 4
-except TypeError:
-    axel_mod = 1.0
-finally:
-    axel_mod = input("Please, type using X.Y or X.YY format:")
-
-try:
-    axel_mod.find("-", 0, 2)
-except ValueError:
-    axel_mod = 1.0
-finally:
-    print("You enter the negative value of time")
-    axel_mod = input("Please, type using positive numbers for X.YY or Y.X format:")
-
-try:
-    match(axel_mod)
-except TypeError:
-    axel_mod = 1.0
-finally:
-    axel_mod = input("Please, use numbers only for X.YY or Y.X format:")
+if len(axel_mod) > 4:
+    try:
+        len(axel_mod) > 4
+    except TypeError:
+        print("Length alert")
+    finally:
+        axel_mod = input("Please, type using X.Y or X.YY format (3 symbols max):")
+elif axel_mod.find("-", 0):
+    try:
+        axel_mod.find("-", 0)
+    except ValueError:
+        print("Negative number alert")
+    finally:
+        axel_mod = input("Please, type using positive numbers for X.Y or X.YY format:")
+elif match(axel_mod):
+    try:
+        match(axel_mod)
+    except TypeError:
+        print("Letters alert")
+    finally:
+        axel_mod = input("Please, type using only numbers X.Y or X.YY format:")
+else:
+    print("time_txt_input")
 
 # Checking the missclicks
 axel_mod = replace_missclicks(axel_mod, '.')
