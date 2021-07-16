@@ -1,14 +1,23 @@
 # Author: Des Kitten
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
-"""
-    TODO:
-    - Try/Exception
-        - by length
-        - by negative values
-    - Refactor sum_of_minutes
-    - Refactor time_acceleration
-    - Return the Ru in other branch
-"""
+
+# !!! A Crunch while is_valid_input is broken
+print("""
+        *******************************************
+        Save your time!
+        Use HH:MM type for time,
+            where HH - hours
+            MM - minutes
+            in your video
+        Use ':' or '.' as a separator
+        And watch tech video faster
+        Use X.YY or Y.X type for accelerated speed
+            where X. or Y. - whole part
+            .YY or .X - decimal part
+        Enjoy,
+            yours Des Kitten
+        ******************************************
+        """)
 
 
 def match(text_to_check, alphabet=None):
@@ -40,59 +49,41 @@ def replace_missclicks(*args) -> str:
     return x
 
 
+'''
+This doesn't work yet
+
+def is_valid_input(*args) -> str:
+    """
+    Function checks if the length is much than needed, if there's negative numbers, and if there's letters.
+    :return: x: string
+    """
+    x = str(args)
+    if len(x) > 11:
+        # print(len(x))  # Debug_line
+        while len(x) > 11:
+            x = input("Too much symbols, enter new values: ")
+            args = str(x)
+    elif not x.find("-", 0, 1):
+        while x.find("-", 0, 1):
+            x = input("Please, enter positive numbers: ")
+            args = str(x)
+    elif match(x):
+        while match(x):
+            x = input("Use numbers and '.' for value: ")
+            args = str(x)
+    else:
+        return str(x)
+'''
+
 # Start, requesting input data
 time_txt_input = input("Input the time value in format HH:MM: ")
-
-# Defence by checking length, letter fill and negative values
-if len(time_txt_input) > 7:
-    try:
-        len(time_txt_input) > 7
-    except TypeError:
-        print("Length alert")
-    finally:
-        time_txt_input = input("Please, type using HH:MM format (6 symbols max):")
-elif match(time_txt_input):
-    try:
-        match(time_txt_input)
-    except TypeError:
-        print("Letters alert")
-    finally:
-        time_txt_input = input("Please, type using only numbers HH:MM format:")
-elif time_txt_input.find("-", 0):
-    try:
-        time_txt_input.find("-", 0)
-    except ValueError:
-        print("Negative number alert")
-    finally:
-        time_txt_input = input("Please, type using positive numbers for HH:MM format:")
-else:
-    print("time_txt_input")
+# Checking the validness
+# !!! time_txt_input = is_valid_input(time_txt_input)
 
 # Requesting speed value and checking is_valid by length, negative num and letter includings
 axel_mod = input("Input the speed value in format X.Y or X.YY: ")
-if len(axel_mod) > 4:
-    try:
-        len(axel_mod) > 4
-    except TypeError:
-        print("Length alert")
-    finally:
-        axel_mod = input("Please, type using X.Y or X.YY format (3 symbols max):")
-elif axel_mod.find("-", 0):
-    try:
-        axel_mod.find("-", 0)
-    except ValueError:
-        print("Negative number alert")
-    finally:
-        axel_mod = input("Please, type using positive numbers for X.Y or X.YY format:")
-elif match(axel_mod):
-    try:
-        match(axel_mod)
-    except TypeError:
-        print("Letters alert")
-    finally:
-        axel_mod = input("Please, type using only numbers X.Y or X.YY format:")
-else:
-    print("time_txt_input")
+# Checking the validness
+# !!! axel_mod = is_valid_input(axel_mod)
 
 # Checking the missclicks
 axel_mod = replace_missclicks(axel_mod, '.')
@@ -110,19 +101,28 @@ sum_of_minutes = num_of_hours * 60 + num_of_minutes
 # Separation the new sum of minutes onto hours and minutes
 h_output, m_output = 1, 1
 time_acceleration = int(sum_of_minutes // acceleration_mod)
+# print(time_acceleration, "time", sum_of_minutes, "sumM", acceleration_mod, "acMod")  # Debug_line
 if time_acceleration >= 60:
     h_output: int = int(time_acceleration / 60)
     m_output: int = int(time_acceleration % 60)
+    print("On the speed of", acceleration_mod, "from base value, you'll spend only:", h_output, "hour/-s", " and",
+          m_output,
+          "minute/-s")
+    print("")
+else:
+    m_output = time_acceleration
+    print("On the speed of", acceleration_mod, "from base value, you'll spend only:", m_output, "minute/-s")
 
 # Calculating the saving time and separating it onto hours and minutes
 h_saved, m_saved = 1, 1
 saved_time = sum_of_minutes - time_acceleration
+# print(time_acceleration, "time", sum_of_minutes, "sumM", saved_time, "SavedTi")  # Debug_line
 if saved_time >= 60:
     h_saved: int = int(saved_time / 60)
     m_saved: int = int(saved_time % 60)
+    print("You save", h_saved, "hour/-s", m_saved, "minute/s for other things")
+else:
+    m_saved = saved_time
+    print("You save", m_saved, "minute/s for other things")
 
-# Output
-print("On the speed of", acceleration_mod, "from base value, you'll spend only:", h_output, "hour/-s", " and", m_output,
-      "minute/-s")
-print("You save", h_saved, "hour/-s", m_saved, "minute/s for other things")
 quit()
