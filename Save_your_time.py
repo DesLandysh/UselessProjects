@@ -4,13 +4,11 @@
 # !!! A Crunch while is_valid_input is broken
 print("""
         *******************************************
-        Save your time!
+                      SAVE YOUR TIME!
         Use HH:MM type for time,
-            where HH - hours
-            MM - minutes
-            in your video
+            where HH - hours, MM - minutes
         Use ':' or '.' as a separator
-        And watch tech video faster
+
         Use X.YY or Y.X type for accelerated speed
             where X. or Y. - whole part
             .YY or .X - decimal part
@@ -49,47 +47,46 @@ def replace_missclicks(*args) -> str:
     return x
 
 
-'''
-This doesn't work yet
+# This doesn't work yet fully
+def is_valid_input(*args):
+    x = str(args)
+    is_neg_input(x)
+    # print(x, "complex foo")
+    return x
 
-def is_valid_input(*args) -> str:
+def is_neg_input(*args) -> str:
     """
     Function checks if the length is much than needed, if there's negative numbers, and if there's letters.
     :return: x: string
     """
     x = str(args)
-    if len(x) > 11:
-        # print(len(x))  # Debug_line
-        while len(x) > 11:
-            x = input("Too much symbols, enter new values: ")
-            args = str(x)
-    elif not x.find("-", 0, 1):
-        while x.find("-", 0, 1):
-            x = input("Please, enter positive numbers: ")
-            args = str(x)
-    elif match(x):
-        while match(x):
-            x = input("Use numbers and '.' for value: ")
-            args = str(x)
+    while "-" in x:
+        x = input("Please, enter the positive numbers: ")
     else:
-        return str(x)
-'''
+        # print(x, "in foo is valid")
+        return x
+
+
 
 # Start, requesting input data
 time_txt_input = input("Input the time value in format HH:MM: ")
 print("")
-# Checking the validness
-# !!! time_txt_input = is_valid_input(time_txt_input)
+time_txt_input = is_valid_input(time_txt_input)
+# Is_valid_input returns here additional symbols before and after string, this solves it
+time_txt_input = time_txt_input[2:-3]
 
-# Requesting speed value and checking is_valid by length, negative num and letter includings
 axel_mod = input("Input the speed value in format X.Y or X.YY: ")
 print("")
-# Checking the validness
-# !!! axel_mod = is_valid_input(axel_mod)
+
+axel_mod = is_valid_input(axel_mod)
+# Is_valid_input returns here additional symbols before and after string, this solves it
+axel_mod = axel_mod[2:-3]
+# print(axel_mod, "after is valid")
 
 # Checking the missclicks
 axel_mod = replace_missclicks(axel_mod, '.')
 time_txt_input = replace_missclicks(time_txt_input, ':')
+# print(time_txt_input, "after replace missclicks")
 
 # Converting the acceleration modifier
 acceleration_mod = float(axel_mod)
