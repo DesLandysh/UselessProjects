@@ -49,11 +49,11 @@ def replace_missclicks(x, y) -> str:
 # This doesn't work yet fully
 def is_valid_input(x):
     # print(x, "x")  # Debug_line
+    x = is_length_valid(x)
+    x = is_letter_input(x)
     x = is_neg_input(x)
-    # print(x, "complex foo")  # Debug_line
-    x = is_letter_input(x) # до ппринта не доходит
-    # print(x, "comples lettes")  # Debug_line
     return str(x)
+
 
 def is_neg_input(x) -> str:
     """
@@ -73,6 +73,15 @@ def is_letter_input(x):
     else:
         # print(x, " in is letter")  # Debug_line
         return str(x)
+
+
+def is_length_valid(x):
+    while len(x) > 6:
+        x = input("Please, use shorter numbers: ")
+    else:
+        # print(x, "is in length")  # Debug_line
+        return str(x)
+
 
 # Start, requesting input data
 time_txt_input = input("Input the time value in format HH:MM: ")
