@@ -1,7 +1,7 @@
 # Author: Des Kitten
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
 
-# !!! A Crunch while is_valid_input is broken
+# Start point
 print("""
         *******************************************
                       SAVE YOUR TIME!
@@ -14,8 +14,7 @@ print("""
             .YY or .X - decimal part
         Enjoy,
             yours Des Kitten
-        ******************************************
-        """)
+        *******************************************""")
 
 
 def match(x, alphabet=None):
@@ -44,11 +43,9 @@ def replace_missclicks(x, y) -> str:
     for i in tup_of_missclicks:
         if x.find(str(i)):
             x = x.replace(str(i), y)
-            # print(x, "is the x value") # Debug_line
     return x
 
 
-# This is crunch
 def is_valid_input(x):
     """
     Func must return valid str to use it later, it must do it while it's not valid
@@ -58,11 +55,11 @@ def is_valid_input(x):
     :param x: user data input
     :return x: str-to-be-sure the valid result
     """
-    # print(x, "x")  # Debug_line
     for i in range(4):
         x = is_length_valid(x)
         x = is_letter_input(x)
         x = is_neg_input(x)
+        x = is_no_hours(x)
         i += 1
     return str(x)
 
@@ -76,7 +73,6 @@ def is_neg_input(x) -> str:
     while "-" in x:
         x = input("Please, enter the positive numbers: ")
     else:
-        # print(x, "in neg is valid")  # Debug_line
         return str(x)
 
 
@@ -89,7 +85,6 @@ def is_letter_input(x):
     while match(x):
         x = input("Please, use numbers instead of letters: ")
     else:
-        # print(x, " in is letter")  # Debug_line
         return str(x)
 
 
@@ -102,7 +97,6 @@ def is_length_valid(x):
     while len(x) > 9:
         x = input("Please, use shorter numbers: ")
     else:
-        # print(x, "is in length")  # Debug_line
         return str(x)
 
 
@@ -112,27 +106,33 @@ def is_no_hours(x):
     :param x: user data input
     :return: x: str
     """
-    z = ',', '?', '/', '@', '<', '>', 'б', 'ю', 'Б', 'Ю', '%', \
+    sep_marker = ',', '?', '/', '@', '<', '>', 'б', 'ю', 'Б', 'Ю', '%', \
         '^', '&', ':', ';', 'Ж', 'ж', '*', '+', "\\", '"', "'", "."
-    pass
+    if x.isdigit():
+        y = "0:"
+        x = str(y + x)
+    else:
+        for i in sep_marker:
+            if x.find(str(i)):
+                y = "0"  # It prevents ".55 is valid" bug
+            else:
+                y = "0"
+                x = (y + x)
+    return str(x)
 
 
-# Start, requesting input data
+# Requesting input data
 time_txt_input = input("Input the time value in format HH:MM: ")
 print("")
 time_txt_input = is_valid_input(time_txt_input)
-print(time_txt_input, "after is valid")  # Debug_line
 
 axel_mod = input("Input the speed value in format X.Y or X.YY: ")
 print("")
 axel_mod = is_valid_input(axel_mod)
-print(axel_mod, "after is valid")  # Debug_line
-
 
 # Checking the missclicks
 axel_mod = replace_missclicks(axel_mod, '.')
 time_txt_input = replace_missclicks(time_txt_input, ':')
-# print(time_txt_input, "after replace missclicks")   # Debug_line
 
 # Converting the acceleration modifier
 acceleration_mod = float(axel_mod)
@@ -146,7 +146,6 @@ sum_of_minutes = num_of_hours * 60 + num_of_minutes
 # Separation the new sum of minutes onto hours and minutes
 h_output, m_output = 1, 1
 time_acceleration = int(sum_of_minutes // acceleration_mod)
-# print(time_acceleration, "time", sum_of_minutes, "sumM", acceleration_mod, "acMod")  # Debug_line
 if time_acceleration >= 60:
     h_output: int = int(time_acceleration / 60)
     m_output: int = int(time_acceleration % 60)
@@ -169,7 +168,6 @@ else:
 # Calculating the saving time and separating it onto hours and minutes
 h_saved, m_saved = 1, 1
 saved_time = sum_of_minutes - time_acceleration
-# print(time_acceleration, "time", sum_of_minutes, "sumM", saved_time, "SavedTi")  # Debug_line
 if saved_time >= 60:
     h_saved: int = int(saved_time / 60)
     m_saved: int = int(saved_time % 60)
