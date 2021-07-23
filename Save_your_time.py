@@ -1,4 +1,4 @@
-# Author: Des Kitten
+# Denis "Des Kitten" Trebushnikov © 2021
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
 
 # Start point
