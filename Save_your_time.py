@@ -2,20 +2,6 @@
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
 
 # Start point
-print("""
-        *******************************************
-                      SAVE YOUR TIME!
-        Use HH:MM type for time,
-            where HH - hours, MM - minutes
-        Use ':' or '.' as a separator
-
-        Use X.YY or Y.X type for accelerated speed
-            where X. or Y. - whole part
-            .YY or .X - decimal part
-        Enjoy,
-            yours Des Kitten
-        *******************************************""")
-
 
 def match(x, alphabet=None):
     """
@@ -121,13 +107,92 @@ def is_no_hours(x):
     return str(x)
 
 
+def count_minutes(base_time_data):
+    """
+    func takes time_acceleration or saved_time
+    :return: h/m_output or h/m_saved
+    """
+    hh = int(base_time_data / 60)
+    mm = int(base_time_data % 60)
+    return hh, mm
+
+
+def stars_line():
+    menu_width = 45
+    print('*' * menu_width)
+
+
+def decor_outputs(foo):
+    def wrapper():
+        stars_line()
+        foo()
+        stars_line()
+    return wrapper
+
+
+@decor_outputs
+def start_menu():
+    print("""              SAVE YOUR TIME!
+    
+   Use HH:MM type for time,
+       where HH - hours, MM - minutes
+   Use ':' or '.' as a separator
+
+   Use X.YY or Y.X type for accelerated speed
+       where X. or Y. - whole part
+       .YY or .X - decimal part
+   Enjoy,
+            yours Des Kitten""")
+
+
+@decor_outputs
+def output_axel_count():
+    if time_acceleration >= 60:
+        time_list = count_minutes(time_acceleration)
+        print(f"""    On the speed of {acceleration_mod} from base value,
+                you'll spend only:
+                    {time_list[0]} hour/-s and
+                    {time_list[1]} minute/-s""")
+    else:
+        print(f"""    On the speed of {acceleration_mod} from base value,
+                you'll spend only:
+                    {time_acceleration} minute/-s""")
+
+
+@decor_outputs
+def output_saved_result():
+    if saved_time >= 60:
+        time_list = count_minutes(saved_time)
+        print(f"""            Congratulations! You saved:
+                    {time_list[0]} hour/-s and
+                    {time_list[1]} minute/-s
+                of your worthless life!""")
+    else:
+        print(f"""            Congratulations! You saved:
+                    {saved_time} minute/-s
+                of your worthless life!""")
+
+
+@decor_outputs
+def print_input_values():
+    print(f"""    Your values are:
+                    
+                     Time: {time_txt_input}
+                         or {sum_of_minutes} minutes 
+                     Speed: {axel_mod}         
+    """)
+
+
+start_menu()
+
 # Requesting input data
-time_txt_input = input("Input the time value in format HH:MM: ")
-print("")
+print()
+time_txt_input = input("Input the time value: ")
+print()
 time_txt_input = is_valid_input(time_txt_input)
 
-axel_mod = input("Input the speed value in format X.Y or X.YY: ")
-print("")
+axel_mod = input("Input the speed value: ")
+print()
 axel_mod = is_valid_input(axel_mod)
 
 # Checking the missclicks
@@ -138,52 +203,18 @@ time_txt_input = replace_missclicks(time_txt_input, ':')
 acceleration_mod = float(axel_mod)
 
 # Find & count minutes in hours and sums them all
-sep_marker = time_txt_input.find(":")
-num_of_hours = int(time_txt_input[:sep_marker])
-num_of_minutes = int(time_txt_input[(sep_marker + 1):])
+num_of_hours = int(time_txt_input.split(':')[0])
+num_of_minutes = int(time_txt_input.split(':')[1])
 sum_of_minutes = num_of_hours * 60 + num_of_minutes
 
+print_input_values()  # Sugar
+
 # Separation the new sum of minutes onto hours and minutes
-h_output, m_output = 1, 1
 time_acceleration = int(sum_of_minutes // acceleration_mod)
-if time_acceleration >= 60:
-    h_output: int = int(time_acceleration / 60)
-    m_output: int = int(time_acceleration % 60)
-    print(f"""
-            *******************************************
-            On the speed of {acceleration_mod} from base value,
-            you'll spend only:
-                {h_output} hour/-s and
-                {m_output} minute/-s
-            *******************************************""")
-else:
-    m_output = time_acceleration
-    print(f"""
-            *******************************************
-            On the speed of {acceleration_mod} from base value,
-            you'll spend only:
-                {m_output} minute/-s
-            *******************************************""")
+output_axel_count()
 
 # Calculating the saving time and separating it onto hours and minutes
-h_saved, m_saved = 1, 1
 saved_time = sum_of_minutes - time_acceleration
-if saved_time >= 60:
-    h_saved: int = int(saved_time / 60)
-    m_saved: int = int(saved_time % 60)
-    print(f"""
-            *******************************************
-                Congratulations! You saved:
-                    {h_saved} hour/-s and
-                    {m_saved} minute/-s
-                of your worthless life!
-            *******************************************""")
-else:
-    m_saved = saved_time
-    print(f"""
-            *******************************************
-                Congratulations! You saved:
-                    {m_saved} minute/-s
-                of your worthless life!
-            *******************************************""")
+output_saved_result()
+
 quit()
