@@ -138,9 +138,8 @@ time_txt_input = replace_missclicks(time_txt_input, ':')
 acceleration_mod = float(axel_mod)
 
 # Find & count minutes in hours and sums them all
-sep_marker = time_txt_input.find(":")
-num_of_hours = int(time_txt_input[:sep_marker])
-num_of_minutes = int(time_txt_input[(sep_marker + 1):])
+num_of_hours = int(time_txt_input.split(':')[0])
+num_of_minutes = int(time_txt_input.split(':')[0])
 sum_of_minutes = num_of_hours * 60 + num_of_minutes
 
 # Separation the new sum of minutes onto hours and minutes
