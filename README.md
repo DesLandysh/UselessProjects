@@ -13,6 +13,6 @@
 			 
 This is not exceptional usefull program, just watching the YT python course on 1.5 or 1.75 speed I decide to write this just for fun and get the saved time as a result.
  
-Think that it is my way to optimize personal time during learning something, and my way to learn something (before July, 10th of 2021 I'd not written any code on Python)
+## Think that it is my way to optimize personal time during learning something, and my way to learn something (before July, 10th of 2021 I'd not written any code on Python)
   
  
