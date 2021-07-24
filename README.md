@@ -1,9 +1,9 @@
 # UselessProjects
 
-Projects made while learning Programming Languages
+## Projects made while learning Programming Languages
 
 
-Save_Your_Time is the program to get the new valie of time when you set other than 1.0 speed while watching/listening video/audio:
+*Save_Your_Time* is the program to get the new valie of time when you set other than 1.0 speed while watching/listening video/audio:
   - You understand to finish it will take less time (less that 6 hours),
   - and even more:
   - Setting the "speed" you know what fold increase/decrease the time (in 1.5 times).
