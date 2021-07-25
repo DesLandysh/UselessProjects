@@ -1,4 +1,3 @@
-import save_your_time
 import sytlib
 
 
@@ -40,29 +39,29 @@ def start_menu():
 
 @decor_outputs
 def output_axel_count():
-    if save_your_time.time_acceleration >= 60:
-        time_list = sytlib.count_minutes(save_your_time.time_acceleration)
-        print(f"""    On the speed of {save_your_time.acceleration_mod} from base value,
+    if sytlib.time_acceleration >= 60:
+        time_list = sytlib.count_minutes(sytlib.time_acceleration)
+        print(f"""    On the speed of {sytlib.acceleration_mod} from base value,
                 you'll spend only:
                     {time_list[0]} hour/-s and
                     {time_list[1]} minute/-s""")
     else:
-        print(f"""    On the speed of {save_your_time.acceleration_mod} from base value,
+        print(f"""    On the speed of {sytlib.acceleration_mod} from base value,
                 you'll spend only:
-                    {save_your_time.time_acceleration} minute/-s""")
+                    {sytlib.time_acceleration} minute/-s""")
 
 
 @decor_outputs
 def output_saved_result():
-    if save_your_time.saved_time >= 60:
-        time_list = sytlib.count_minutes(save_your_time.saved_time)
+    if sytlib.saved_time >= 60:
+        time_list = sytlib.count_minutes(sytlib.saved_time)
         print(f"""            Congratulations! You saved:
                     {time_list[0]} hour/-s and
                     {time_list[1]} minute/-s
                 of your worthless life!""")
     else:
         print(f"""            Congratulations! You saved:
-                    {save_your_time.saved_time} minute/-s
+                    {sytlib.saved_time} minute/-s
                 of your worthless life!""")
 
 
@@ -70,7 +69,7 @@ def output_saved_result():
 def print_input_values():
     print(f"""    Your values are:
 
-                      Time: {save_your_time.time_txt_input}
-                         or {save_your_time.sum_of_minutes} minutes 
-                     Speed: {save_your_time.axel_mod}         
+                      Time: {sytlib.time_txt_input}
+                         or {sytlib.sum_of_minutes} minutes 
+                     Speed: {sytlib.axel_mod}         
     """)
