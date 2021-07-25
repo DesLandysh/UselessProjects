@@ -1,23 +1,6 @@
 # Denis "Des Kitten" Trebushnikov © 2021
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
 
-# Start point
-
-def match(x, alphabet=None):
-    """
-    Function checks if the inputting value have any letters (Stolen from StackOverFlow)
-    :param x: input data
-    :param alphabet: eng/ru
-    :return: True if input data have any letter
-    """
-    if alphabet is None:
-        alphabet = set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
-                       'abcdefghijklmnopqrstuvwyxz'
-                       'АБВГДЕЁЖЗИЙКЛАМНОПРСТУФХЦЧЩЪЫЬЭЮЯ'
-                       'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-    return not alphabet.isdisjoint(x)
-
-
 def replace_missclicks(x, y) -> str:
     """
     Function returns string with replaced separator
@@ -34,10 +17,11 @@ def replace_missclicks(x, y) -> str:
 
 def is_valid_input(x):
     """
-    Func must return valid str to use it later, it must do it while it's not valid
-    is_length_valid checks if the len > 6
-    is_letter_input checks if the data has letters
-    is_neg_input checks if there's "-" sign
+    Function returns valid str
+        is_length_valid checks if the len > 6
+        is_letter_input checks if the data has letters
+        is_neg_input checks if there's "-" sign
+        is_no_hours checks if time_txt_input looks like '.55'
     :param x: user data input
     :return x: str-to-be-sure the valid result
     """
@@ -68,7 +52,7 @@ def is_letter_input(x):
     :param x: user input data
     :return x: str-to-be-sure new input data
     """
-    while match(x):
+    while x.isalpha():
         x = input("Please, use numbers instead of letters: ")
     else:
         return str(x)
@@ -107,10 +91,10 @@ def is_no_hours(x):
     return str(x)
 
 
-def count_minutes(base_time_data):
+def count_minutes(base_time_data: int):
     """
-    func takes time_acceleration or saved_time
-    :return: h/m_output or h/m_saved
+    Function takes time_acceleration or saved_time
+    :return int-to-be-sure: separated hours and minutes data
     """
     hh = int(base_time_data / 60)
     mm = int(base_time_data % 60)
@@ -118,11 +102,17 @@ def count_minutes(base_time_data):
 
 
 def stars_line():
+    """
+    Draw the line of asterisks
+    """
     menu_width = 45
     print('*' * menu_width)
 
 
 def decor_outputs(foo):
+    """
+    Decorator takes function and wraps it with lines of asterisks
+    """
     def wrapper():
         stars_line()
         foo()
@@ -177,7 +167,7 @@ def output_saved_result():
 def print_input_values():
     print(f"""    Your values are:
                     
-                     Time: {time_txt_input}
+                      Time: {time_txt_input}
                          or {sum_of_minutes} minutes 
                      Speed: {axel_mod}         
     """)
