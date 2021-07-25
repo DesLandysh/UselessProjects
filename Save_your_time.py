@@ -1,21 +1,6 @@
 # Denis "Des Kitten" Trebushnikov © 2021
 # Program that count new time when you set other than 1.0 speed while watching video/listening audio
 
-def match(x, alphabet=None):
-    """
-    Function checks if the inputting value have any letters (Stolen from StackOverFlow)
-    :param x: input data
-    :param alphabet: eng/ru
-    :return: True if input data have any letter
-    """
-    if alphabet is None:
-        alphabet = set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
-                       'abcdefghijklmnopqrstuvwyxz'
-                       'АБВГДЕЁЖЗИЙКЛАМНОПРСТУФХЦЧЩЪЫЬЭЮЯ'
-                       'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-    return not alphabet.isdisjoint(x)
-
-
 def replace_missclicks(x, y) -> str:
     """
     Function returns string with replaced separator
@@ -67,7 +52,7 @@ def is_letter_input(x):
     :param x: user input data
     :return x: str-to-be-sure new input data
     """
-    while match(x):
+    while x.isalpha():
         x = input("Please, use numbers instead of letters: ")
     else:
         return str(x)
