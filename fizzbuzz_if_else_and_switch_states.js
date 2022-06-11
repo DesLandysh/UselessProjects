@@ -29,6 +29,7 @@ for (let i of arr) {
     default: print(i);
   };
 }
+// 1 2 ... 98 fizz buzz
 
 print('\n')
 
@@ -44,3 +45,4 @@ for (let j in arr) {
     print(j);
   };
 }
+// fizzbuzz 1 2 ... 97 98 fizz
