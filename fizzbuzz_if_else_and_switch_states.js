@@ -10,8 +10,8 @@ const make_arr = (number) => {
   return array;
 };
 
-arr = make_arr(20);
-// output: [1, 2, 3... ...20]
+arr = make_arr(100);
+// output: [1, 2, 3... ...100]
 // print(arr); // to make sure of this
 
 // FOR OF takes values
