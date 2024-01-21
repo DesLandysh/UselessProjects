@@ -7,4 +7,4 @@
     
 *sortall* script used for sorting .png files in ComfyUI output directory being placed inside it
   
- 
+*diet* smoothie generator (RUSSIAN language) mixes ingrdiencts to make new smoothie reciept (for my wife). In plans is to add fluids in.
