@@ -3,13 +3,15 @@ import sys
 from time import sleep
 
 
-ingridients = sorted(["огурец", "сельдерей", "банан", "апельсин", "капуста", "морковка", "киви", "помидор", "груша", "вишня", "петрушка", "имбирь", "яблоко", "персик", "клубника", "смородина", "ежевика", "малина", "укроп", "мята", "шпинат", "брокколи", "грейпфрут", "авокадо", "болгарский перец", "манго", "личи", "драконий фрукт"])
+with open("ingredients.txt", 'r') as f:
+    ingredients = sorted(f.read().split(", "))
 
-fluids = sorted(["вода", "кефир", "йогурт", "молоко"])
-
-
+with open("fluids.txt", 'r') as f:
+    fluids = sorted(f.read().split(", "))
+    
+    
 def intro():
-    print("Программа автоматического выбора ингридиентов для смузи\n")
+    print("Программа автоматического выбора ингредиентов для смузи\n")
 
 
 def outro(sec):
@@ -17,9 +19,9 @@ def outro(sec):
     sys.exit()
 
 
-def show_ingridients():
-    print("Доступные ингридиенты:\n")
-    for i, v in enumerate(ingridients):
+def show_ingredients():
+    print("Доступные ингредиенты:\n")
+    for i, v in enumerate(ingredients):
         print(f'{i+1:3}. {v}')
 
 
@@ -30,19 +32,23 @@ def is_correct_int(user_input, num = 6):
     
 
 def is_correct_str(user_input):
-    if user_input.isalpha():
+    if user_input.isalpha() and match_ru(user_input):
         return True
     return False
+    
+
+def match_ru(user_input, alphabet=set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')):
+    return not alphabet.isdisjoint(user_input)
         
 
 def menu_print():
         print(f'''\nМеню управления:
--- 1. Показать доступные ингридиенты
--- 2. Добавить ингридиент
--- 3. Удалить ингридиент
--- 4. Смешать 2 ингридиента
--- 5. Смешать 3 ингридиента
--- 6. Смешать заданное количество ингридиентов
+-- 1. Показать доступные ингредиенты
+-- 2. Добавить ингредиент
+-- 3. Удалить ингредиент
+-- 4. Смешать 2 ингредиента
+-- 5. Смешать 3 ингредиента
+-- 6. Смешать заданное количество ингредиентов
 
 -- 0. Выход\n''')
 
@@ -62,12 +68,12 @@ def menu_ask():
 def menu_act():
     match (menu_ask()):
         case 1:
-            show_ingridients()
+            show_ingredients()
             menu_act()
         case 2:
-            add_ingridient()
+            add_ingredient()
         case 3:
-            remove_ingridient()
+            remove_ingredient()
         case 4:
             output_smoothie(get_smoothie(2), get_fluid())
         case 5:
@@ -82,39 +88,45 @@ def menu_act():
             outro(3)
 
 
-def add_ingridient():
-    user_input = input("Введите один ингридиент: ").lower().strip().split(" ")
+def add_ingredient():
+    user_input = input("Введите один ингредиент: ").lower().strip().split(" ")
     if is_correct_str(user_input[0]):
-        if user_input[0] not in ingridients:
-            ingridients.append(user_input[0])
-            print(f'Ингридиент  "{user_input[0]}"  добавлен.\n')
+        if user_input[0] not in ingredients:
+            ingredients.append(user_input[0])
+            print(f'Ингредиент  "{user_input[0]}"  добавлен.\n')
+            with open ("ingredients.txt", 'w') as f:
+                f.write(", ".join(sorted(ingredients)))
+        else:
+          print(f'Ингредиент "{user_input[0]}" уже есть в списке доступных.\n')
     else:
-        print("Что-то пошло не так. Ингридиент не добавлен.")
+        print("Что-то пошло не так. Ингредиент не добавлен.")
 
 
-def remove_ingridient():
+def remove_ingredient():
     num = -1
-    show_ingridients()
+    show_ingredients()
     print("\n0. для выхода")
     
     while True:
-        user_input = input("Введите номер ингридиента для удаления: ")
-        if is_correct_int(user_input, len(ingridients)):
+        user_input = input("Введите номер ингредиента для удаления: ")
+        if is_correct_int(user_input, len(ingredients)):
             num = int(user_input)
             break
     print(num)
     if num == 0:
-        menu_act()
-    elif 0 < num <= len(ingridients):
-        dct = {k:v for k, v in enumerate(ingridients)}
-        ingridients.remove(dct[num-1])
-        print(f'Ингридиент  "{dct[num-1]}"  удален.\n')
+       pass
+    elif 0 < num <= len(ingredients):
+        dct = {k:v for k, v in enumerate(ingredients)}
+        ingredients.remove(dct[num-1])
+        print(f'Ингредиент  "{dct[num-1]}"  удален.\n')
+        with open ("ingredients.txt", 'w') as f:
+            f.write(", ".join(sorted(ingredients)))
 
 
 def get_smoothie(num = 3):
     if not (2 >= num >= 3):
-        while num > len(ingridients) or num < 1:
-          user_input = input(f"Сколько ингридиентов использовать? Доступно {len(ingridients)} ингридиентов: ")
+        while num > len(ingredients) or num < 1:
+          user_input = input(f"Сколько ингредиентов использовать? Доступно {len(ingredients)} ингредиентов: ")
           if is_correct_int(user_input):
               num = int(user_input)
               break
@@ -122,12 +134,12 @@ def get_smoothie(num = 3):
               print("Неверный ввод. Повторите.")        
     smoothie = set()
     while len(smoothie) < num:
-        smoothie.add(random.choice(ingridients))
+        smoothie.add(random.choice(ingredients))
     return smoothie
 
 
 def output_smoothie(smoothie, fluid):
-    print(f'Вот ингридиенты для вашего смузи: {", ".join(smoothie)} и {fluid}.')
+    print(f'Вот ингредиенты для вашего смузи: {", ".join(smoothie)} и {fluid}.')
     
 
 def get_fluid():
