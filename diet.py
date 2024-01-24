@@ -5,6 +5,8 @@ from time import sleep
 
 ingridients = sorted(["огурец", "сельдерей", "банан", "апельсин", "капуста", "морковка", "киви", "помидор", "груша", "вишня", "петрушка", "имбирь", "яблоко", "персик", "клубника", "смородина", "ежевика", "малина", "укроп", "мята", "шпинат", "брокколи", "грейпфрут", "авокадо", "болгарский перец", "манго", "личи", "драконий фрукт"])
 
+fluids = sorted(["вода", "кефир", "йогурт", "молоко"])
+
 
 def intro():
     print("Программа автоматического выбора ингридиентов для смузи\n")
@@ -67,11 +69,11 @@ def menu_act():
         case 3:
             remove_ingridient()
         case 4:
-            output_smoothie(get_smoothie(2))
+            output_smoothie(get_smoothie(2), get_fluid())
         case 5:
-            output_smoothie(get_smoothie(3))
+            output_smoothie(get_smoothie(3), get_fluid())
         case 6:
-            output_smoothie(get_smoothie(0))
+            output_smoothie(get_smoothie(0), get_fluid())
         case 0:
             print("Завершение программы...")
             outro(2)
@@ -124,8 +126,12 @@ def get_smoothie(num = 3):
     return smoothie
 
 
-def output_smoothie(lst):
-    print(f"Вот ингридиенты для вашего смузи: {lst}.")
+def output_smoothie(smoothie, fluid):
+    print(f'Вот ингридиенты для вашего смузи: {", ".join(smoothie)} и {fluid}.')
+    
+
+def get_fluid():
+    return random.choice(fluids)
 
 
 def run():
