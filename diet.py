@@ -8,7 +8,6 @@ ingridients = sorted(["огурец", "сельдерей", "банан", "ап�
 
 def intro():
     print("Программа автоматического выбора ингридиентов для смузи\n")
-    show_ingridients()
 
 
 def outro(sec):
@@ -130,12 +129,12 @@ def output_smoothie(lst):
 
 
 def run():
-    intro()
     while True:
         menu_act()
   
 
 if __name__ == "__main__":
     assert sys.version_info >= (3, 10), f'\n\nОбновите Python до версии 3.10 или новее\nВаша текущая версия Python: {sys.version_info[0]}.{sys.version_info[1]}'
+    intro()
     run()
     outro(2)
