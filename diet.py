@@ -87,10 +87,8 @@ def add_ingridient():
         if user_input[0] not in ingridients:
             ingridients.append(user_input[0])
             print(f'Ингридиент  "{user_input[0]}"  добавлен.\n')
-            menu_act()
     else:
         print("Что-то пошло не так. Ингридиент не добавлен.")
-        menu_act()
 
 
 def remove_ingridient():
@@ -110,7 +108,6 @@ def remove_ingridient():
         dct = {k:v for k, v in enumerate(ingridients)}
         ingridients.remove(dct[num-1])
         print(f'Ингридиент  "{dct[num-1]}"  удален.\n')
-    menu_act()
 
 
 def get_smoothie(num = 3):
@@ -134,7 +131,8 @@ def output_smoothie(lst):
 
 def run():
     intro()
-    menu_act()
+    while True:
+        menu_act()
   
 
 if __name__ == "__main__":
