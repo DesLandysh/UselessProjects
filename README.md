@@ -9,3 +9,5 @@
   
 *diet* smoothie generator (RUSSIAN language) mixes ingrdiencts to make new smoothie reciept (for my wife). In plans is to add fluids in.
     and two .txt files added: ingredients.txt and fluids.txt
+
+*console colors* was written just for testing terminal colors for Windows 10, txt - list of commands, .png - useful screenshot from Colorama.
