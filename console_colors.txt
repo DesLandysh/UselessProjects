@@ -1,0 +1,76 @@
+The only WIN32 ANSI sequences:
+
+ESC = \e or \033
+
+ESC [ 0 m       # reset all (colors and brightness)
+ESC [ 1 m       # bright
+ESC [ 2 m       # dim (looks same as normal brightness)
+ESC [ 22 m      # normal brightness
+
+# FOREGROUND:
+ESC [ 30 m      # black
+ESC [ 31 m      # red
+ESC [ 32 m      # green
+ESC [ 33 m      # yellow
+ESC [ 34 m      # blue
+ESC [ 35 m      # magenta
+ESC [ 36 m      # cyan
+ESC [ 37 m      # white
+      38;5;0-256m
+ESC [ 39 m      # reset / normal
+
+# BACKGROUND
+ESC [ 40 m      # black
+ESC [ 41 m      # red
+ESC [ 42 m      # green
+ESC [ 43 m      # yellow
+ESC [ 44 m      # blue
+ESC [ 45 m      # magenta
+ESC [ 46 m      # cyan
+ESC [ 47 m      # white
+      48;5;0-256m
+ESC [ 49 m      # reset / normal
+
+# cursor positioning
+ESC [ y;x H     # position cursor at x across, y down
+ESC [ y;x f     # position cursor at x across, y down
+ESC [ n A       # move cursor n lines up
+ESC [ n B       # move cursor n lines down
+ESC [ n C       # move cursor n characters forward
+ESC [ n D       # move cursor n characters backward
+
+# clear the screen
+ESC [ n J    # clear the screen
+                  n=0 or no n: 
+                      clear from cursor to the end
+                  n=1
+                      clear from cursor to the beginning
+                  n=2
+                      clear entire screen (cursor pos 0,0 == upper-left)
+                  n=3 
+                      clear all and delete all lines saved in the scrollback buffer
+
+# clear the line
+ESC [ n K    # clear the line
+                  n=0 or no n:
+                      clear form cursor to the end of line
+                  n=1
+                      clear from cursor to the beginning of line
+                  n=2
+                      clear full line. CURSOR POS DOEN"T CHANGE!!!
+
+
+Multiple numeric params to the 'm' command can be combined into a single sequence:
+
+ESC [ 36 ; 45 ; 1 m     # bright cyan text on magenta background
+
+
+ Format control of cursor position, etc.:  
+   
+ \033[2J Clear screen    
+ \033[K Clear the content from the cursor to the end of the line    
+ \033[s save the cursor position    
+ \033[u restore cursor position    
+ \033[?25l hide the cursor    
+ \33[?25h show cursor  
+ 
