@@ -11,3 +11,5 @@
     and two .txt files added: ingredients.txt and fluids.txt
 
 *console colors* was written just for testing terminal colors for Windows 10, txt - list of commands, .png - useful screenshot from Colorama.
+
+*get_more_money_per_month* simple prover that mono deposit is worse than splitted.
